@@ -1,22 +1,19 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'main.dart';
 
 class MyHomePage extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context) {
-    var myAppState = context.watch<MyAppState>();
 
     return Scaffold(
       body: Column(
         children: [
-          WelcomeBar(appState: myAppState),
-          Date(appState: myAppState,),
-          DailyMed(appState: myAppState),
+          WelcomeBar(),
+          DateBar(),
+          DailyMed(),
         ],
       ),
     );
@@ -26,10 +23,7 @@ class MyHomePage extends StatelessWidget {
 class DailyMed extends StatelessWidget{
   const DailyMed({
     super.key,
-    required this.appState
   });
-
-  final MyAppState appState;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +42,8 @@ class DailyMed extends StatelessWidget{
           Text('Daily Medication',textScaleFactor: 2, style: TextStyle(color: Colors.black),),
           Text('You have missed $x pills today'),
           Container(
-            width: 450,
+            color: Colors.grey,
+            width: MediaQuery.of(context).size.width,
             height: 350,
             child: Row(
               children:[
@@ -88,14 +83,11 @@ class TimeColumn extends StatelessWidget {
 class WelcomeBar extends StatelessWidget {
   const WelcomeBar({
     super.key,
-    required this.appState,
   });
-
-  final MyAppState appState;
 
   @override
   Widget build(BuildContext context) {
-    var user = appState.user.toString();
+    String user = "john";
     var width = MediaQuery.of(context).size.width - 50;
 
     return Container(
@@ -124,60 +116,32 @@ class Notifications extends StatelessWidget {
     super.key,
   });
 
+  get pressed => null;
+
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: pressed(),clipBehavior: Clip.antiAlias, child: Image.asset('lib/res/Notification.png'),);
-  }
-
-  pressed() {
-
+    return ElevatedButton(onPressed: pressed,clipBehavior: Clip.antiAlias, child: Image.asset('lib/res/Notification.png'),);
   }
 }
 
-class Date extends StatelessWidget {
-  const Date({
-    super.key,
-    required this.appState
+class DateBar extends StatelessWidget {
+  const DateBar({
+    super.key
   });
-
-  final MyAppState appState;
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width - 50;
-
-    return Align(
-      alignment: Alignment.center,
-      widthFactor: 24,
-      child: Container(
-        color: Colors.grey,
-        height: 100,
-        width: width > 500? width : 500,
-        padding: EdgeInsets.all(9),
-        child: DayBar(appState: appState,),
-      )
-    );
-  }
-}
-
-class DayBar extends StatelessWidget {
-  const DayBar({
-    super.key,
-    required this.appState
-  });
-
-  final MyAppState appState;
-
-  @override
-  Widget build(BuildContext context) {
-    DateTime time = DateTime.now().subtract(const Duration(days: 15));
-    int timespan = 30;
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: [
-        for (int i = 0; i < timespan; i++)
-          DateDisplay(time: time.add(Duration(days: i)),appState: appState),
-      ],
+    return Container(
+      height: 100,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (context,index) {
+            return Container(
+              child: DateDisplay(time: DateTime(2023),),
+            );
+          }
+      ),
     );
   }
 }
@@ -185,28 +149,26 @@ class DayBar extends StatelessWidget {
 class DateDisplay extends StatelessWidget {
   const DateDisplay({
     super.key,
-    required this.time,
-    required this.appState
+    required this.time
   });
   
   final DateTime time;
-  final MyAppState appState;
 
-  dosth(){
-    appState.getDate(time);
-  }
+  doSth() => null;
 
   @override
   Widget build(BuildContext context) {
     var Month = time.month;
     var Day = time.day;
-    return ClipRect(
+    return Container(
+      width: 100,
+      height: 100,
       child: ElevatedButton(
-          onPressed: dosth(),
+          onPressed: doSth(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text('$Day',style: TextStyle(color: Colors.black),textScaleFactor: 2.2,),
+              Text('$Day',style: TextStyle(color: Colors.black),),
               Text('th$Month', style: TextStyle(color: Colors.black),)
             ],
           )
