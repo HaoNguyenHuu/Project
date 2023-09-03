@@ -13,7 +13,7 @@ class MyHomePage extends StatelessWidget {
         children: [
           WelcomeBar(user: "john",),
           DateBar(),
-          DailyMed(),
+          DailyMed()
         ],
       ),
     );
@@ -47,8 +47,12 @@ class DailyMed extends StatelessWidget{
             height: 350,
             child:
               ListView.builder(
+                  itemCount: 50,
                   itemBuilder: (context,index){
-                    return MedTimeTable();
+                    return Container(
+                        padding: EdgeInsets.all(5.0),
+                        child: MedTimeTable(),
+                    );
                   })
             ),
         ],
@@ -66,7 +70,36 @@ class MedTimeTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
+        Container(
+          color: Colors.red,
+          width: 50,
+          child: Column(
+            children: [
+              Text('test')
+            ],
+          ),
+        ),
+        SizedBox(width: 10,),
+        Container(
+          color: Colors.red,
+          padding: EdgeInsets.all(5.0),
+          alignment: Alignment.centerLeft,
+          width: 500,
+          height: 50,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 20,
+              itemBuilder: (context,index){
+                return Container(
+                  padding: EdgeInsets.all(5.0),
+                  child: Container(
+                    color: Colors.purple,
+                    child: Text('data'),
+                  )
+                );
+              }
+          ),
+        )
       ],
     );
   }
