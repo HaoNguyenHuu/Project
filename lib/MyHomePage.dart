@@ -11,7 +11,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          WelcomeBar(),
+          WelcomeBar(user: "john",),
           DateBar(),
           DailyMed(),
         ],
@@ -45,53 +45,47 @@ class DailyMed extends StatelessWidget{
             color: Colors.grey,
             width: MediaQuery.of(context).size.width,
             height: 350,
-            child: Row(
-              children:[
-                Container(width: 100,child: TimeColumn()),
-                Container(width: 350,child: MedicationsColumn()),
-              ]
+            child:
+              ListView.builder(
+                  itemBuilder: (context,index){
+                    return MedTimeTable();
+                  })
             ),
-          )
         ],
       ),
     );
   }
 }
 
-class MedicationsColumn extends StatelessWidget {
-  const MedicationsColumn({
+class MedTimeTable extends StatelessWidget {
+  const MedTimeTable({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column();
-  }
-}
+    return Row(
+      children: [
 
-class TimeColumn extends StatelessWidget {
-  const TimeColumn({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column();
+      ],
+    );
   }
 }
 
 class WelcomeBar extends StatelessWidget {
   const WelcomeBar({
     super.key,
+    required this.user
   });
+
+  final String user;
 
   @override
   Widget build(BuildContext context) {
-    String user = "john";
+
     var width = MediaQuery.of(context).size.width - 50;
 
     return Container(
-      color: Colors.green,
       width: width > 500? width : 500,
       padding: const EdgeInsets.only(left: 9,right: 9,top: 5, bottom: 5),
       child: Row(
@@ -104,7 +98,7 @@ class WelcomeBar extends StatelessWidget {
               Text('Have a nice day')
             ],
           ),
-          Notifications(),
+          Notifications()
         ],
       ),
     );
@@ -120,7 +114,12 @@ class Notifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: pressed,clipBehavior: Clip.antiAlias, child: Image.asset('lib/res/Notification.png'),);
+    return ElevatedButton(
+      onPressed: pressed,
+      child: Image.asset(
+          'lib/res/Notification.png',
+      scale: 1,),
+    );
   }
 }
 
@@ -132,12 +131,14 @@ class DateBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(5.0),
       height: 100,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (context,index) {
             return Container(
+              padding: EdgeInsets.all(5.0),
               child: DateDisplay(time: DateTime(2023),),
             );
           }
