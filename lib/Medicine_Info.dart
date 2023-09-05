@@ -33,13 +33,12 @@ class MedicineInfo extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white54,
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        color: Colors.white54,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        padding: EdgeInsets.all(10.0),
+        child: ListView(
             children: [
               NameInput(),
               SizedBox(height: 15,),
@@ -53,7 +52,6 @@ class MedicineInfo extends StatelessWidget {
               SizedBox(height: 15,),
               DisplayLayout(),
             ],
-          ),
         ),
       ),
     );
@@ -67,13 +65,83 @@ class DisplayLayout extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Display'),
-        SizedBox(height: 5,),
-        DisplayImage()
-      ],
+    return Container(
+      width: 380,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Display'),
+          SizedBox(height: 15,),
+          DisplayImage(),
+          SizedBox(height: 15,),
+          DisplayColor()
+        ],
+      ),
+    );
+  }
+}
+
+class DisplayColor extends StatefulWidget {
+  const DisplayColor({
+    super.key,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _DisplayColorState();
+}
+
+class _DisplayColorState extends State<DisplayColor>{
+  List<Color> ColorList = [
+    Colors.black,Colors.white54,Colors.red,Colors.orange,Colors.yellow,Colors.green,
+    Colors.black12,Colors.white,Colors.redAccent,Colors.orangeAccent,Colors.yellowAccent,Colors.greenAccent
+  ];
+  int isSelected = -1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(2.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black)
+      ),
+      child: Flexible(
+        child: GridView.builder(
+          itemCount: ColorList.length,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 80,
+                childAspectRatio: 3/2,
+                crossAxisSpacing: 7,
+                mainAxisSpacing: 7,
+            ),
+            itemBuilder: (context,index){
+              return Container(
+                width: 40,
+                height: 40,
+                color: isSelected == index? Color.fromRGBO(209, 235, 236, 1) : Colors.white,
+                padding: EdgeInsets.all(2.0),
+                child: IconButton(
+                  icon: ClipRect(
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      color: ColorList[index],
+                    )
+                  ),
+                  onPressed: (){
+                    setState(() {
+                      if (isSelected == index) {
+                        isSelected = -1;
+                      } else {
+                        isSelected = index;
+                      }
+                    });
+                  },
+                ),
+              );
+            }
+        ),
+      ),
     );
   }
 }
@@ -99,7 +167,7 @@ class _DisplayImageState extends State<DisplayImage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 360,
+      width: 380,
       height: 60,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black)
@@ -145,7 +213,7 @@ class NoteInput extends StatelessWidget {
         Text('Note'),
         SizedBox(
           height: 60,
-          width: 360,
+          width: 380,
           child: TextField(
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -171,7 +239,7 @@ class TimesPerDay extends StatelessWidget {
         Text('Times per day'),
         SizedBox(
           height: 60,
-          width: 360,
+          width: 380,
           child: TextField(
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
@@ -186,7 +254,7 @@ class TimesPerDay extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: 175,
+              width: 180,
               height: 60,
               child: TextField(
                 textAlign: TextAlign.center,
@@ -205,7 +273,7 @@ class TimesPerDay extends StatelessWidget {
             ),
             SizedBox(width: 10,),
             SizedBox(
-              width: 175,
+              width: 180,
               height: 60,
               child: TextField(
                 textAlign: TextAlign.center,
@@ -250,7 +318,7 @@ class Frequency extends StatelessWidget {
         Text('Frequency'),
         SizedBox(
           height: 60,
-          width: 360,
+          width: 380,
           child: TextField(
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
@@ -282,7 +350,7 @@ class CountInput extends StatelessWidget {
             Text('Count'),
             SizedBox(
               height: 60,
-              width: 215,
+              width: 225,
               child: TextField(
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -354,7 +422,7 @@ class NameInput extends StatelessWidget {
         Text('Name'),
         SizedBox(
           height: 60,
-          width: 360,
+          width: 380,
           child: TextField(
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
