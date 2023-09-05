@@ -25,3 +25,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/res/Notification.png
+    - lib/res/watch.png
+    - lib/res/InfoImage1.png
+    - lib/res/InfoImage2.png
+    - lib/res/InfoImage3.png
