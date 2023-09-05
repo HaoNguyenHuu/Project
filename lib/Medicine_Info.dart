@@ -116,8 +116,8 @@ class _DisplayColorState extends State<DisplayColor>{
             ),
             itemBuilder: (context,index){
               return Container(
-                width: 40,
-                height: 40,
+                width: 35,
+                height: 35,
                 color: isSelected == index? Color.fromRGBO(209, 235, 236, 1) : Colors.white,
                 padding: EdgeInsets.all(2.0),
                 child: IconButton(
@@ -125,7 +125,10 @@ class _DisplayColorState extends State<DisplayColor>{
                     child: Container(
                       width: 30,
                       height: 30,
-                      color: ColorList[index],
+                      decoration: BoxDecoration(
+                        color: ColorList[index],
+                        border: Border.all(color: Colors.black)
+                      ),
                     )
                   ),
                   onPressed: (){
