@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:project/Medicine_Info.dart';
+import 'MyFamilyInfo.dart';
+import 'MyInfo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: ThemeData(useMaterial3: true),
-      home: MedicineInfo(),
+      home: MyFamilyInfo(),
     );
   }
 }
