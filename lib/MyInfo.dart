@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MyInfo extends StatelessWidget {
   @override
@@ -97,7 +96,7 @@ class Name extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: ''
+                    hintText: '',
                 ),
               ),
             ),
@@ -142,22 +141,15 @@ class Birth extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Birthday'),
-            SizedBox(
+            Container(
+              alignment: Alignment.center,
               height: 60,
               width: 165,
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                    prefixIcon: Image.asset('lib/res/watch.png'),
-                    border: OutlineInputBorder(),
-                    hintText: '00/00/0000'
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-
-                ],
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black54),
+                borderRadius: BorderRadius.circular(4),
               ),
+              child: BDate()
             ),
           ],
         ),
@@ -174,6 +166,50 @@ class Birth extends StatelessWidget {
               child: UnitMenu(),
             ),
           ],
+        )
+      ],
+    );
+  }
+}
+
+class BDate extends StatefulWidget {
+  const BDate({
+    super.key,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _BDateState();
+}
+
+class _BDateState extends State<BDate> {
+  DateTime _dateTime = DateTime.now();
+
+  void _ShowDatePicker() {
+    showDatePicker(
+        context: context,
+        initialDate: _dateTime,
+        firstDate: DateTime(DateTime.now().year - 100),
+        lastDate: DateTime.now(),
+    ).then((value){
+      setState(() {
+        _dateTime = value!;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          onPressed: _ShowDatePicker,
+          icon: Icon(
+            Icons.ice_skating,
+          ),
+        ),
+        Text(
+          '${_dateTime.day}/${_dateTime.month}/${_dateTime.year}',
+          textAlign: TextAlign.center,
         )
       ],
     );
